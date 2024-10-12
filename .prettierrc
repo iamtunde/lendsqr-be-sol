@@ -1,0 +1,9 @@
+{
+    "endOfLine": "lf",
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "insertPragma": true,
+    "jsxSingleQuote": false,
+    "tabWidth": 2,
+    "embeddedLanguageFormatting": "auto"
+}

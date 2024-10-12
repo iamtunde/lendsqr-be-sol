@@ -1,0 +1,39 @@
+{
+  "name": "kivu-community",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "dev": "clear; NODE_ENV=development nodemon --exec ts-node ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "npx tsc",
+    "create:module": "npx tsc ./src/scripts/module.generator.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/firebase": "^3.2.1",
+    "@types/joi": "^17.2.3",
+    "@types/node": "^20.14.8",
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase": "^10.12.2",
+    "firebase-admin": "^12.2.0",
+    "firebase-auth": "^0.1.2",
+    "firebase-functions": "^5.0.1",
+    "firebase-storage": "^1.1.4",
+    "joi": "^17.13.3",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}
