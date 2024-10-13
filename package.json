@@ -1,5 +1,5 @@
 {
-  "name": "kivu-community",
+  "name": "lendsqr-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
     "build": "npx tsc",
-    "create:module": "npx tsc ./src/scripts/module.generator.ts"
+    "create:module": "npx ts-node ./src/scripts/module.generator.ts",
+    "db:migrate": "knex migrate:latest",
+    "db:make:migration": "knex migrate:make",
+    "db:migrate:rollback": "knex migrate:down",
+    "db:list:migration": "knex migrate:list",
+    "db:seed:make": "knex seed:make",
+    "db:seed": "knex seed:run"
   },
   "keywords": [],
   "author": "",
@@ -19,21 +25,28 @@
     "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/firebase": "^3.2.1",
     "@types/joi": "^17.2.3",
+    "@types/knex": "^0.16.1",
     "@types/node": "^20.14.8",
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "firebase": "^10.12.2",
-    "firebase-admin": "^12.2.0",
-    "firebase-auth": "^0.1.2",
-    "firebase-functions": "^5.0.1",
-    "firebase-storage": "^1.1.4",
     "joi": "^17.13.3",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jsonwebtoken": "^9.0.7",
+    "bcrypt": "^5.1.1",
+    "bcrypt-ts": "^5.0.2",
+    "body-parser": "^1.20.3",
+    "dayjs": "^1.11.13",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "mysql2": "^3.11.3"
   }
 }

@@ -10,7 +10,7 @@ import { Request, Response } from "express";
  * @param {NextFunction} next executes the next middleware when invoked
  * @returns error object
  */
-export const ErrorHandler = (err: any, req: Request, res: Response) => {
+export const errorHandler = (err: any, req: Request, res: Response) => {
   if (err instanceof CustomError) {
     return error(res, err.serializeErrors()[0].message, err.statusCode);
   }

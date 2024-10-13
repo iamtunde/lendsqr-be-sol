@@ -1,19 +1,36 @@
 /** @format */
 import { Request, Response } from "express";
 import { success } from "../../utils/response.api";
-import { AsyncHandler } from "../../requests/middleware";
 import { AuthService } from "./auth.service";
 
-export const getSignInQRCodeImage = async (req: Request, res: Response) => {
-  const image = null;
+/**
+ * @desc user sign up
+ * @access Public
+ * @route POST /auth/signUp
+ * @param {Request} req http request
+ * @param {Response} res http response
+ * @returns an authenticated user object
+ */
+export const signUp = async (req: Request, res: Response) => {
+  const payload = req.body;
 
-  return success(res, "Successfully retrieved qr image.", image, 200);
+  const data = await AuthService.signUp(payload);
+
+  return success(res, "User successfully registered.", data, 200);
 };
 
-export const getSignInCode = AsyncHandler(
-  async (req: Request, res: Response) => {
-    const code = null;
+/**
+ * @desc user sign in
+ * @access Public
+ * @route POST /auth/signIn
+ * @param {Request} req http request
+ * @param {Response} res http response
+ * @returns an authenticated user object
+ */
+export const signIn = async (req: Request, res: Response) => {
+  const payload = req.body;
 
-    return success(res, "Successfully retrieved sign up code.", code, 200);
-  },
-);
+  const data = await AuthService.signIn(payload);
+
+  return success(res, "User successfully signed in.", data, 200);
+};

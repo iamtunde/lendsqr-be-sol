@@ -7,3 +7,7 @@ export const removePlusSign = (string: string) => {
 export const includePlusSign = (string: string) => {
   return `+${string}`;
 };
+
+export const createNubanFromPhone = (string: string) => {
+  return string.replace("234", "");
+};

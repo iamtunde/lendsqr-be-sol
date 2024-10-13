@@ -14,7 +14,7 @@ function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const dirPath = join(__dirname, "./src/controllers", moduleName);
+const dirPath = join(process.cwd(), "src", "controllers", moduleName);
 const controllerFilePath = join(dirPath, `${moduleName}.controller.ts`);
 const serviceFilePath = join(dirPath, `${moduleName}.service.ts`);
 

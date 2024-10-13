@@ -1,6 +1,6 @@
 /** @format */
 
-export const generateRandomString = (length: number = 10) => {
+export const generateRandomString = (length: number = 30) => {
   let string: string;
   const possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -9,5 +9,5 @@ export const generateRandomString = (length: number = 10) => {
     string += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
-  return string;
+  return string.replace("undefined", "");
 };

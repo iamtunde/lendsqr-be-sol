@@ -1,6 +1,12 @@
-import { Request, Response, NextFunction } from "express"
+/** @format */
 
-export const RequestLogger = (req: Request, res: Response, next: NextFunction) => {
+import { Request, Response, NextFunction } from "express";
+
+export const requestLogger = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const body = req.body;
   const headers = req.headers;
 

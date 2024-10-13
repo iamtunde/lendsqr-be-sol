@@ -1,0 +1,26 @@
+[
+    {
+        "firstName": "Tunde",
+        "lastName": "Yusuf",
+        "email": "iamtundeyusuf@gmail.com",
+        "password": "secret",
+        "phone": "2347059767184",
+        "level": 3
+    },
+    {
+        "firstName": "John",
+        "lastName": "Adelabu",
+        "email": "johnade@gmail.com",
+        "password": "secret",
+        "phone": "2348091624088",
+        "level": 1
+    },
+    {
+        "firstName": "Grace",
+        "lastName": "Okobi",
+        "email": "g.okobi@gmail.com",
+        "password": "secret",
+        "phone": "2348094738422",
+        "level": 2
+    }
+]

@@ -5,7 +5,7 @@ import { CustomError } from "./custom.error";
 export class DatabaseConnectionError extends CustomError {
   reason = "Error connecting to database";
   errCode: string;
-  constructor(message, errCode = null) {
+  constructor(message: string, errCode = null) {
     super(message);
     this.message = message;
     this.statusCode = 500;

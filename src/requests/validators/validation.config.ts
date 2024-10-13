@@ -1,6 +1,6 @@
 /** @format */
 
-export const validation_options = {
+export const validationConfig = {
   abortEarly: false,
   errors: { wrap: { label: "" } },
 };

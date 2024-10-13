@@ -1,19 +1,12 @@
 /** @format */
 
 import express from "express";
-import {
-  getSignInQRCodeImage,
-  getSignInCode,
-} from "../controllers/auth/auth.controller";
-import { validatePhoneNumberString } from "../requests/validators";
+import { signIn, signUp } from "../controllers/auth/auth.controller";
+import { signInValidation, signUpValidation } from "../requests/validators";
 
 const route = express.Router();
 
-route.get("/get-qr-code", getSignInQRCodeImage);
-route.get(
-  "/get-code/:phone_number",
-  [validatePhoneNumberString],
-  getSignInCode,
-);
+route.post("/signUp", signUpValidation, signUp);
+route.post("/signIn", signInValidation, signIn);
 
 export { route as Authentication };
