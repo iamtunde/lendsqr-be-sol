@@ -175,7 +175,7 @@ describe("Wallet endpoint tests", () => {
     const response = await request(bootstrap)
       .post("/wallets/withdraw")
       .send({
-        amount: 10000000,
+        amount: 5000,
         accountNumber: generateRandomNumber(10),
         accountName: `${faker.person.firstName()} ${faker.person.lastName()}`,
         bankName: "Test Bank",
@@ -204,5 +204,23 @@ describe("Wallet endpoint tests", () => {
     expect(response.status).toBe(200);
     expect(response.body.data).toBeDefined();
     expect(response.body.data).toHaveProperty("reference");
+  });
+
+  it("should return transaction limit error", async () => {
+    const response = await request(bootstrap)
+      .post("/wallets/withdraw")
+      .send({
+        amount: 10000000,
+        accountNumber: generateRandomNumber(10),
+        accountName: `${faker.person.firstName()} ${faker.person.lastName()}`,
+        bankName: "Test Bank",
+      })
+      .set("Authorization", `Bearer ${authToken}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.errors).toEqual([
+      { message: "Transaction amount is above daily transaction limit." },
+    ]);
   });
 });
