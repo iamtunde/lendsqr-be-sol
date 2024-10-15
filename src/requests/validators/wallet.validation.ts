@@ -42,7 +42,7 @@ export const fundWalletValidation = (
   const { error } = schema.validate(req.body, validationConfig);
 
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw new RequestValidationError(error);
   }
 
   next();
@@ -66,9 +66,8 @@ export const findWalletByNubanValidation = (
   });
 
   const { error } = schema.validate(req.body, validationConfig);
-
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw new RequestValidationError(error);
   }
 
   next();
@@ -91,7 +90,7 @@ export const sendMoneyValidation = (
   const { error } = schema.validate(req.body, validationConfig);
 
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw new RequestValidationError(error);
   }
 
   next();
@@ -120,7 +119,7 @@ export const withdrawMoneyValidation = (
   const { error } = schema.validate(req.body, validationConfig);
 
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw new RequestValidationError(error);
   }
 
   next();

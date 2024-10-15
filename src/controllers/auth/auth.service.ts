@@ -72,7 +72,7 @@ export class AuthService {
       // Rollback the transaction if an error occurs
       await dbTransaction.rollback();
 
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -107,7 +107,7 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 }

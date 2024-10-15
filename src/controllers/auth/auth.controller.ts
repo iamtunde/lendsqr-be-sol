@@ -1,5 +1,5 @@
 /** @format */
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { success } from "../../utils/response.api";
 import { AuthService } from "./auth.service";
 
@@ -12,12 +12,16 @@ export class AuthController {
    * @param {Response} res http response
    * @returns an authenticated user object
    */
-  static async signUp(req: Request, res: Response) {
-    const payload = req.body;
+  static async signUp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
 
-    const data = await AuthService.signUp(payload);
+      const data = await AuthService.signUp(payload);
 
-    return success(res, "User successfully registered.", data, 200);
+      return success(res, "User successfully registered.", data, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**
@@ -28,11 +32,15 @@ export class AuthController {
    * @param {Response} res http response
    * @returns an authenticated user object
    */
-  static async signIn(req: Request, res: Response) {
-    const payload = req.body;
+  static async signIn(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
 
-    const data = await AuthService.signIn(payload);
+      const data = await AuthService.signIn(payload);
 
-    return success(res, "User successfully signed in.", data, 200);
+      return success(res, "User successfully signed in.", data, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 }

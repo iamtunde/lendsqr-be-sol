@@ -2,8 +2,8 @@
 
 // src/controllers/wallet/wallet.controller.ts
 
-import { Request, Response } from "express";
-import { success } from "../../utils/response.api";
+import { Request, Response, NextFunction } from "express";
+import { success, error } from "../../utils/response.api";
 import { WalletService } from "./wallet.service";
 
 export class WalletController {
@@ -13,14 +13,17 @@ export class WalletController {
    * @route POST /wallets
    * @param {Request} req http request
    * @param {Response} res http response
+   * @param {NextFunction} next next function for error handling
    * @returns a transaction record object
    */
-  static async fundUserWallet(req: Request, res: Response) {
-    const payload = req.body;
-
-    const data = await WalletService.fundUserWallet(payload);
-
-    return success(res, "Wallet successfully funded.", data, 200);
+  static async fundUserWallet(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
+      const data = await WalletService.fundUserWallet(payload);
+      return success(res, "Wallet successfully funded.", data, 200);
+    } catch (err) {
+      next(err); // Pass the error to the centralized error handler
+    }
   }
 
   /**
@@ -29,12 +32,16 @@ export class WalletController {
    * @route POST /wallets
    * @param {Request} req http request
    * @param {Response} res http response
+   * @param {NextFunction} next next function for error handling
    * @returns an authenticated user wallet object
    */
-  static async findUserWallet(req: Request, res: Response) {
-    const data = await WalletService.findUserWalletBalance(+req.body.userId);
-
-    return success(res, "Wallet successfully retrieved.", data, 200);
+  static async findUserWallet(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await WalletService.findUserWalletBalance(+req.body.userId);
+      return success(res, "Wallet successfully retrieved.", data, 200);
+    } catch (err) {
+      next(err); // Pass the error to the centralized error handler
+    }
   }
 
   /**
@@ -43,14 +50,23 @@ export class WalletController {
    * @route PATCH /wallets/lookUp
    * @param {Request} req http request
    * @param {Response} res http response
+   * @param {NextFunction} next next function for error handling
    * @returns lookUp response
    */
-  static async lookUpWalletNuban(req: Request, res: Response) {
-    const payload = req.body;
+  static async lookUpWalletNuban(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const payload = req.body;
+      console.log({ payload });
+      const data = await WalletService.findWallet(payload);
 
-    const data = await WalletService.findWallet(payload);
-
-    return success(res, "Account look-up successful.", data, 200);
+      return success(res, "Account look-up successful.", data, 200);
+    } catch (err) {
+      next(err); // Pass the error to the centralized error handler
+    }
   }
 
   /**
@@ -59,14 +75,17 @@ export class WalletController {
    * @route POST /wallets/sendMoney
    * @param {Request} req http request
    * @param {Response} res http response
+   * @param {NextFunction} next next function for error handling
    * @returns lookUp response
    */
-  static async sendMoney(req: Request, res: Response) {
-    const payload = req.body;
-
-    const data = await WalletService.sendMoney(payload);
-
-    return success(res, "Transaction successful.", data, 200);
+  static async sendMoney(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
+      const data = await WalletService.sendMoney(payload);
+      return success(res, "Transaction successful.", data, 200);
+    } catch (err) {
+      next(err); // Pass the error to the centralized error handler
+    }
   }
 
   /**
@@ -75,13 +94,16 @@ export class WalletController {
    * @route POST /wallets/withdraw
    * @param {Request} req http request
    * @param {Response} res http response
+   * @param {NextFunction} next next function for error handling
    * @returns lookUp response
    */
-  static async withdrawMoney(req: Request, res: Response) {
-    const payload = req.body;
-
-    const data = await WalletService.withdrawMoney(payload);
-
-    return success(res, "Transaction successful.", data, 200);
+  static async withdrawMoney(req: Request, res: Response, next: NextFunction) {
+    try {
+      const payload = req.body;
+      const data = await WalletService.withdrawMoney(payload);
+      return success(res, "Transaction successful.", data, 200);
+    } catch (err) {
+      next(err); // Pass the error to the centralized error handler
+    }
   }
 }

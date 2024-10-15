@@ -1,7 +1,7 @@
 /** @format */
 // src/controllers/transaction/transaction.controller.ts
 
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { TransactionService } from "./transaction.service";
 import { success } from "../../utils/response.api";
 
@@ -14,12 +14,20 @@ export class TransactionController {
    * @param {Response} res http response
    * @returns a list of transactions
    */
-  static async getUserTransactions(req: Request, res: Response) {
-    const { userId } = req.body;
+  static async getUserTransactions(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { userId } = req.body;
 
-    const data = await TransactionService.getUserTransactions(userId);
+      const data = await TransactionService.getUserTransactions(userId);
 
-    return success(res, "Successfully retrieved transactions.", data, 200);
+      return success(res, "Successfully retrieved transactions.", data, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**
@@ -30,11 +38,19 @@ export class TransactionController {
    * @param {Response} res http response
    * @returns transaction objet
    */
-  static async getOneTransaction(req: Request, res: Response) {
-    const { reference } = req.params;
+  static async getOneTransaction(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { reference } = req.params;
 
-    const data = await TransactionService.getOneUserTransaction(reference);
+      const data = await TransactionService.getOneUserTransaction(reference);
 
-    return success(res, "Transaction retrieved successfully.", data, 200);
+      return success(res, "Transaction retrieved successfully.", data, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 }

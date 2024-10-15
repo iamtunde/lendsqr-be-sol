@@ -45,7 +45,7 @@ export const signUpValidation = (
   const { error } = schema.validate(req.body, validationConfig);
 
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw error;
   }
 
   next();
@@ -73,7 +73,7 @@ export const signInValidation = (
   const { error } = schema.validate(req.body, validationConfig);
 
   if (error) {
-    throw new RequestValidationError(error.details);
+    throw error;
   }
 
   next();

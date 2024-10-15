@@ -1,7 +1,7 @@
 /** @format */
 
 // src/controllers/resource/resource.controller.ts
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ResourceService } from "./resource.service";
 import { success } from "../../utils/response.api";
 
@@ -14,9 +14,13 @@ export class ResourceController {
    * @param {Response} res http response
    * @returns a list of transactions
    */
-  static async getBankList(req: Request, res: Response) {
-    const data = await ResourceService.getBanks();
+  static async getBankList(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await ResourceService.getBanks();
 
-    return success(res, "Successfully retrieved transactions.", data, 200);
+      return success(res, "Successfully retrieved transactions.", data, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 }

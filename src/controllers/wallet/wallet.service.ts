@@ -1,7 +1,7 @@
 /** @format */
 
 // src/controllers/wallet/wallet.service.ts
-import { BadRequestError } from "../../errors";
+import { BadRequestError, CustomError } from "../../errors";
 import {
   TRANSACTION_MESSAGES,
   TRANSACTION_STATUS,
@@ -21,7 +21,7 @@ import {
 export class WalletService {
   protected static async walletLookup(nuban: string, userId: number) {
     const wallet = await WalletModel.findWalletByNuban(nuban);
-    // return wallet;
+
     if (!wallet) {
       throw new BadRequestError("Unable to verify account number.");
     }
@@ -78,7 +78,7 @@ export class WalletService {
       return TransactionModel.getOneTransaction(reference);
     } catch (error) {
       await dbTransaction.rollback();
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -96,21 +96,21 @@ export class WalletService {
         nuban: wallet.nuban,
       };
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 
-  static async findUserWalletBalance(userId: number) {
+  static async findUserWalletBalance(userId: number): Promise<any> {
     try {
       const wallet = await WalletModel.findUserWallet(userId);
 
       if (!wallet) {
-        throw new BadRequestError("Wallet not found for user.");
+        return { error: true, message: "Wallet not found for user." };
       }
 
       return wallet;
     } catch (error) {
-      throw new Error(error);
+      return { error: true, message: error };
     }
   }
 
@@ -126,6 +126,7 @@ export class WalletService {
 
       const senderWallet = await this.findUserWalletBalance(payload.userId);
 
+      if (senderWallet.error) return;
       if (senderWallet.currentBalance < payload.amount) {
         throw new BadRequestError("Insufficient wallet balance");
       }
@@ -195,7 +196,7 @@ export class WalletService {
     } catch (error) {
       await dbTransaction.rollback();
 
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -247,7 +248,7 @@ export class WalletService {
     } catch (error) {
       await dbTransaction.rollback();
 
-      throw new Error(error);
+      throw error;
     }
   }
 }

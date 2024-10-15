@@ -11,7 +11,7 @@ export class ResourceService {
 
       return banks;
     } catch (error) {
-      throw new Error();
+      throw error;
     }
   }
 }

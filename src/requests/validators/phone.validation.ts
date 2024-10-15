@@ -21,7 +21,7 @@ export const validatePhoneNumberString = (
 
   const { error } = schema.validate(req.params, validationConfig);
 
-  if (error) throw new RequestValidationError(error.details);
+  if (error) throw error;
 
   next();
 };

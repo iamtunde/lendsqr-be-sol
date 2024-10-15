@@ -1,23 +1,22 @@
 /** @format */
 
+// src/middleware/error-handler.ts
+import { Request, Response, NextFunction } from "express";
+import { CustomError } from "../../errors";
 import { error } from "../../utils/response.api";
-import { CustomError } from "../../errors/custom.error";
-import { Request, Response } from "express";
-/**
- * @desc error handler middleware
- * @param {Request} req http request
- * @param {Response} res http response
- * @param {NextFunction} next executes the next middleware when invoked
- * @returns error object
- */
-export const errorHandler = (err: any, req: Request, res: Response) => {
+
+export const errorHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  // If the error is an instance of CustomError, handle it
   if (err instanceof CustomError) {
-    return error(res, err.serializeErrors()[0].message, err.statusCode);
+    return res.status(err.statusCode).json({
+      errors: err.serializeErrors(),
+    });
   }
 
-  return error(
-    res,
-    "We have experienced a technical glitch whilst processing your request, kindly try again in a few seconds.",
-    500,
-  );
+  return error(res, "Something went wrong.", 500);
 };

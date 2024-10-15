@@ -12,7 +12,7 @@ export class TransactionService {
 
       return transactions;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -21,12 +21,12 @@ export class TransactionService {
       const transaction = await TransactionModel.getOneTransaction(reference);
 
       if (!transaction) {
-        throw new NotFoundError("Transation not found.");
+        throw new NotFoundError("Transaction not found.");
       }
 
       return transaction;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 }
