@@ -2,70 +2,29 @@
 
 import axios, { AxiosRequestConfig } from "axios";
 
-const config = (headers: object) => {
-  const c: AxiosRequestConfig = {
-    headers: {
-      ...headers,
-      "Content-Type": "application/json",
-    },
-  };
-
-  return c;
-};
-
 export class HTTP {
+  protected static requestConfig(headers: object | null) {
+    const config: AxiosRequestConfig = {
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+    };
+
+    return config;
+  }
+
   static async post(endpoint: string, payload: any, headers: object = {}) {
-    const config: AxiosRequestConfig = {
-      headers: {
-        ...headers,
-        "Content-Type": "application/json",
-      },
-    };
+    const config = this.requestConfig(headers);
+    let response = null;
+    try {
+      response = await axios.post(`${endpoint}`, payload, config);
+    } catch (err) {
+      const { status } = response.err;
+      throw new Error(`Request failed with ${status}`);
+    }
 
-    return await axios
-      .post(`${endpoint}`, payload, config)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  }
-
-  static async patch(endpoint: string, payload: any, headers: object = {}) {
-    const config: AxiosRequestConfig = {
-      headers: {
-        ...headers,
-        "Content-Type": "application/json",
-      },
-    };
-
-    return await axios
-      .patch(`${endpoint}`, payload, config)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  }
-
-  static async put(endpoint: string, payload: any, headers: object = {}) {
-    const config: AxiosRequestConfig = {
-      headers: {
-        ...headers,
-        "Content-Type": "application/json",
-      },
-    };
-
-    return await axios
-      .put(`${endpoint}`, payload, config)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    return response.data;
   }
 
   static async get(
@@ -73,32 +32,26 @@ export class HTTP {
     headers: object = {},
     payload: any = null,
   ) {
-    const config: AxiosRequestConfig = {
-      headers: {
-        ...headers,
-        "Content-Type": "application/json",
-      },
-    };
-    console.log({ config });
-    if (payload) {
-      config.data = payload;
-      return await axios
-        .get(`${endpoint}`, config)
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
-    } else {
-      return await axios
-        .get(`${endpoint}`, config)
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
+    const config = this.requestConfig(headers);
+
+    let response = null;
+
+    try {
+      if (payload) {
+        config.data = payload;
+        response = await axios.get(`${endpoint}`, config);
+      } else {
+        response = await axios.get(`${endpoint}`, config);
+      }
+    } catch (err) {
+      if (err.response.status === 404) {
+        response = err.response;
+      } else {
+        const { status } = response.err;
+        throw new Error(`Request failed with ${status}`);
+      }
     }
+
+    return response.data;
   }
 }

@@ -5,34 +5,36 @@ import { Request, Response } from "express";
 import { TransactionService } from "./transaction.service";
 import { success } from "../../utils/response.api";
 
-/**
- * @desc list users' transactions
- * @access Public
- * @route GET /transactions
- * @param {Request} req http request
- * @param {Response} res http response
- * @returns a list of transactions
- */
-export const getUserTransactions = async (req: Request, res: Response) => {
-  const { userId } = req.body;
+export class TransactionController {
+  /**
+   * @desc list users' transactions
+   * @access Public
+   * @route GET /transactions
+   * @param {Request} req http request
+   * @param {Response} res http response
+   * @returns a list of transactions
+   */
+  static async getUserTransactions(req: Request, res: Response) {
+    const { userId } = req.body;
 
-  const data = await TransactionService.getUserTransactions(userId);
+    const data = await TransactionService.getUserTransactions(userId);
 
-  return success(res, "Successfully retrieved transactions.", data, 200);
-};
+    return success(res, "Successfully retrieved transactions.", data, 200);
+  }
 
-/**
- * @desc a retrieve a single transaction record
- * @access Public
- * @route GET /transactions/:reference
- * @param {Request} req http request
- * @param {Response} res http response
- * @returns transaction objet
- */
-export const getOneTransaction = async (req: Request, res: Response) => {
-  const { reference } = req.params;
+  /**
+   * @desc a retrieve a single transaction record
+   * @access Public
+   * @route GET /transactions/:reference
+   * @param {Request} req http request
+   * @param {Response} res http response
+   * @returns transaction objet
+   */
+  static async getOneTransaction(req: Request, res: Response) {
+    const { reference } = req.params;
 
-  const data = await TransactionService.getOneUserTransaction(reference);
+    const data = await TransactionService.getOneUserTransaction(reference);
 
-  return success(res, "Transaction retrieved successfully.", data, 200);
-};
+    return success(res, "Transaction retrieved successfully.", data, 200);
+  }
+}

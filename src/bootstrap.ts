@@ -6,7 +6,7 @@ import { requestLogger, errorHandler } from "./requests/middleware/index";
 import { NotFoundError } from "./errors";
 
 // Load available route files
-import { Authentication, Wallet, Transaction } from "./routes";
+import { Authentication, Wallet, Transaction, Resource } from "./routes";
 
 const bootstrap = express();
 
@@ -23,6 +23,7 @@ bootstrap.get("/", (req, res) => {
 bootstrap.use("/auth", Authentication);
 bootstrap.use("/wallets", Wallet);
 bootstrap.use("/transactions", Transaction);
+bootstrap.use("/resources", Resource);
 
 bootstrap.all("*", (req, res, next) => {
   next(new NotFoundError("That endpoint does not exist."));

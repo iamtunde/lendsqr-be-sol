@@ -12,6 +12,7 @@ import { signToken } from "./jwt.strategy";
 import { ISignIn, ISignUp } from "./auth.interface";
 import { WalletModel } from "../../models/wallet.model";
 import { TransactionLimitModel } from "../../models/transactionLimit.model";
+import { Adjutor } from "../../integrations/adjutor";
 
 export class AuthService {
   static async signUp(payload: ISignUp) {

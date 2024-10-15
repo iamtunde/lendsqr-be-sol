@@ -1,13 +1,7 @@
 /** @format */
 
 import express from "express";
-import {
-  findUserWallet,
-  fundUserWallet,
-  lookUpWalletNuban,
-  sendMoney,
-  withdrawMoney,
-} from "../controllers/wallet/wallet.controller";
+import { WalletController } from "../controllers/wallet/wallet.controller";
 import {
   fundWalletValidation,
   findWalletByNubanValidation,
@@ -18,18 +12,26 @@ import { jwtMiddleware } from "../requests/middleware";
 
 const route = express.Router();
 
-route.get("/", jwtMiddleware, findUserWallet);
-route.post("/", [jwtMiddleware, fundWalletValidation], fundUserWallet);
-route.post("/sendMoney", [jwtMiddleware, sendMoneyValidation], sendMoney);
+route.get("/", jwtMiddleware, WalletController.findUserWallet);
+route.post(
+  "/",
+  [jwtMiddleware, fundWalletValidation],
+  WalletController.fundUserWallet,
+);
+route.post(
+  "/sendMoney",
+  [jwtMiddleware, sendMoneyValidation],
+  WalletController.sendMoney,
+);
 route.post(
   "/withdraw",
   [jwtMiddleware, withdrawMoneyValidation],
-  withdrawMoney,
+  WalletController.withdrawMoney,
 );
 route.patch(
   "/lookUp",
   [jwtMiddleware, findWalletByNubanValidation],
-  lookUpWalletNuban,
+  WalletController.lookUpWalletNuban,
 );
 
 export { route as Wallet };
