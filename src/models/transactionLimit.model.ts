@@ -10,6 +10,8 @@ interface TransactionLimitPayload {
 
 interface TransactionLimit extends TransactionLimitPayload {
   id: number;
+  totalAmount?: number;
+  limitExpiry?: string;
   createdAt?: string;
   updatedAt?: string;
 }

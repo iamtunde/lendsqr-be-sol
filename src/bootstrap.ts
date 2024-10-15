@@ -5,6 +5,9 @@ import cors from "cors";
 import { requestLogger, errorHandler } from "./requests/middleware/index";
 import { NotFoundError } from "./errors";
 
+// Load events
+import "./events/index";
+
 // Load available route files
 import { Authentication, Wallet, Transaction, Resource } from "./routes";
 

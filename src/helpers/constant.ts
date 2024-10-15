@@ -17,3 +17,9 @@ export enum TRANSACTION_MESSAGES {
   FUND = "wallet funded",
   DEBIT = "wallet debited",
 }
+
+export enum EVENT_TYPES {
+  LOG_TRANSACTION = "log-transaction",
+}
+
+export const DAILY_TRANSACTION_LIMIT = 10000;

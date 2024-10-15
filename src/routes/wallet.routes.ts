@@ -8,7 +8,7 @@ import {
   sendMoneyValidation,
   withdrawMoneyValidation,
 } from "../requests/validators";
-import { jwtMiddleware } from "../requests/middleware";
+import { jwtMiddleware, transactionLimitChecker } from "../requests/middleware";
 
 const route = express.Router();
 
@@ -20,12 +20,12 @@ route.post(
 );
 route.post(
   "/sendMoney",
-  [jwtMiddleware, sendMoneyValidation],
+  [jwtMiddleware, sendMoneyValidation, transactionLimitChecker],
   WalletController.sendMoney,
 );
 route.post(
   "/withdraw",
-  [jwtMiddleware, withdrawMoneyValidation],
+  [jwtMiddleware, withdrawMoneyValidation, transactionLimitChecker],
   WalletController.withdrawMoney,
 );
 route.patch(

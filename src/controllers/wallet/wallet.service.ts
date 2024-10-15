@@ -3,6 +3,7 @@
 // src/controllers/wallet/wallet.service.ts
 import { BadRequestError, CustomError } from "../../errors";
 import {
+  EVENT_TYPES,
   TRANSACTION_MESSAGES,
   TRANSACTION_STATUS,
   TRANSACTION_TYPES,
@@ -17,6 +18,7 @@ import {
   ISendMoney,
   IWithdrawMoney,
 } from "./wallet.interface";
+import { emitter } from "../../events/emitter";
 
 export class WalletService {
   protected static async walletLookup(nuban: string, userId: number) {
@@ -192,6 +194,11 @@ export class WalletService {
         }),
       ]);
 
+      emitter.emit(EVENT_TYPES.LOG_TRANSACTION, {
+        amount: payload.amount,
+        userId: payload.userId,
+      });
+
       return TransactionModel.getOneTransaction(transactionRef);
     } catch (error) {
       await dbTransaction.rollback();
@@ -242,6 +249,11 @@ export class WalletService {
 
       await TransactionModel.updateOneTransaction(transaction.id, {
         status: TRANSACTION_STATUS.SUCCESSFUL,
+      });
+
+      emitter.emit(EVENT_TYPES.LOG_TRANSACTION, {
+        amount: payload.amount,
+        userId: payload.userId,
       });
 
       return await TransactionModel.getOneTransaction(reference);
