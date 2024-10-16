@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "nodemon src/index.ts",
     "dev": "clear; NODE_ENV=development nodemon --exec ts-node ./src/index.ts",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
