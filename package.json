@@ -10,7 +10,9 @@
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "clean": "rm -rf dist",
-    "build": "npx tsc",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "create:module": "npx ts-node ./src/scripts/module.generator.ts",
     "db:migrate": "knex migrate:latest",
     "db:make:migration": "knex migrate:make",
@@ -21,6 +23,11 @@
   },
   "keywords": [],
   "author": "",
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^9.0.3",
@@ -38,6 +45,8 @@
     "jest": "^29.7.0",
     "joi": "^17.13.3",
     "nodemon": "^3.1.4",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^6.0.1",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
